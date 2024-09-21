@@ -30,11 +30,11 @@ class UserService {
     }
 
     public async listUsers() {
-        return db.users.findMany();
+        return await db.users.findMany();
     }
 
     public async getUserById(id: string) {
-        return db.users.findUnique({
+        return await db.users.findUnique({
             where: { id }
         });
     }
@@ -44,12 +44,12 @@ class UserService {
 
         if (password) {
             const hashedPassword = await bcrypt.hash(password, 10);
-            return db.users.update({
+            return await db.users.update({
                 where: { id },
                 data: { name, password: hashedPassword, username }
             });
         } else {
-            return db.users.update({
+            return await db.users.update({
                 where: { id },
                 data: { name, username }
             });
