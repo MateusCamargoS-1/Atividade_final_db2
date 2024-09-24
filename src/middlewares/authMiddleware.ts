@@ -9,10 +9,13 @@ async function authMiddleware(req: Request, res: Response, next: NextFunction) {
         return res.status(401).json({success: false, msg: 'Não autorizado'});
     }
 
+    const token = Array.isArray(authHeader) ? authHeader[0] : authHeader;
+
     try {
         const user = await db.users.findFirst({
             where: {
-                token: authHeader
+
+                token: token
             }
         });
 
